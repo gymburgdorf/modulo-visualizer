@@ -6,9 +6,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <style type="text/css">
 
-      body {padding: 1em; font-size: 1.2em; font-family: monospace;}
+      body {padding: 2em 2em 10em 2em ; font-size: 1.2em; font-family: monospace; max-width: 800px; margin: auto;}
 
       h5 {margin-top: 2em;}
+
+      svg {max-width: 60vmin;}
 
       svg text {
         font-family: sans-serif;
@@ -24,12 +26,19 @@
         stroke-width: 4;
       }
 
+      summary, .col {color: #cdf;}
+      dfn {color: #cfe; font-style: normal;}
+      .equation {color: #cfe; font-size: 1.2em;}
+
+      .detailcontent {
+        padding: 1em 0 0 2em;
+      }
       input {background-color: #555; color: white; width: 4em; text-align: right;}
 
     </style>
-    <script type="text/javascript" id="MathJax-script" async
+    <!--script type="text/javascript" id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+    </script-->
   </head>
   <body>
     <h3>Modulo-Ring</h3>
@@ -43,25 +52,73 @@
       <button class="step" onclick="step()">Step</button>
       <button class="reset" onclick="reset()">Reset</button>
     </p>
-    <p>
+    <p class="equation">
       <input name="m" type="number" value="2">
       <sup class="steps">1</sup> 
-      = <span class="result"></span>
+      <span class="operation"></span>
+      <span class="result"></span>
     </p>
     <div>
       <h5>Auf dem Weg zu RSA</h5>
       <p>
-        Beobachtung: Es gibt Werte für <dfn>steps</dfn> und <dfn>N</dfn>, für die gilt:
+        <span class="col">Beobachtung: </span>Es gibt Werte für <dfn>steps</dfn> und <dfn>N</dfn>, für die gilt:
       </p>
-      <p>m <sup>steps</sup> % N = m</p>
+      <p class="equation">m <sup>steps</sup> % N = m</p>
       <p>
         Zum Beispiel:
         <br>N = 33, steps = 21 oder
-        <br>N = 55, steps = 81
+        <br>N = 55, steps = 81 oder
+        <br>viele andere (auch riesige) Zahlen
       </p>
       <p>
         Nach mehrfachem Multiplizieren landet man also wieder am Ausgangspunkt im Ring.
       </p>
+      <p>
+        <span class="col">Idee: </span> Man teilt die <dfn>steps</dfn> auf in zwei Teile:
+      </p>
+      <p class="equation">m <sup>e * d</sup> % N = m</p>
+      <details>
+        <summary>
+          Welche Möglichkeit ergibt sich daraus?
+        </summary>
+        <div class="detailcontent">
+          Man kann die Zahlen <dfn>N</dfn> und <dfn>e</dfn> (wie encrypt) veröffentlichen.
+          Jemand kann dann einen Klartext <dfn>m</dfn> verschlüsseln:
+          <p class="equation">m <sup>e</sup> % N = c</p>
+        <details>
+          <summary>
+            Wie kann man den Geheimtext <dfn>c</dfn> wieder entschlüsseln?
+          </summary>
+          <div class="detailcontent">
+            Man kann nun das Ergebnis mit dem privaten Schlüssel <dfn>d</dfn> (wie decrypt) potenzieren (auf dem Modulo-Ring <dfn>N</dfn>) und findet so den Klartext <dfn>m</dfn>.
+            <p class="equation">c <sup>d</sup> % N = m</p>
+            weil:
+            <p class="equation">m <sup>e * d</sup> = ( m <sup>e</sup> ) <sup>d</sup>
+          </div>
+        </details>
+        <details>
+          <summary>
+            Warum ist dieses Verfahren (noch) einigermassen sicher?
+          </summary>
+          <div class="detailcontent">
+            Die Zahlen <dfn>d</dfn> und <dfn>N</dfn> sind in Wirklichkeit riesig (z.B. 2048 bits)!
+            Dadurch wird es fast unmöglich <dfn>d</dfn> oder <dfn>m</dfn> zu finden, obwohl man <dfn>c</dfn>, <dfn>d</dfn> und <dfn>N</dfn> kennt.
+            <br>Wenn man weiss, wie oft man multiplizieren muss (<dfn>d</dfn> ) kann mann das Verfahren deutlich abkürzen.
+            <br>Mit einem leistungsstarken Quantencomputer wird man dieses Verfahren jedoch knacken können!
+          </div>
+        </details>
+        <details>
+          <summary>
+            Hat das nun etwas mit Primzahlen zu tun?
+          </summary>
+          <div class="detailcontent">
+            Die Zahl <dfn>N</dfn> ist ein Produkt aud zwei Primzahlen p * q.
+            Wenn man diese Faktorenzerlegung kennt, kann man ein <dfn>e</dfn> wählen (oft 65537) und das passende <dfn>d</dfn> finden.
+            Die Sicherheit von RSA beruht daher auf der Schwierigkeit eine riesige Zahl in Faktoren zu zerlegen.
+          </div>
+        </details>
+        </div>
+      </details>
     </div>
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

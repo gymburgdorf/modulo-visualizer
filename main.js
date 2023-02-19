@@ -55,6 +55,7 @@ async function step() {
     let N = +dqs("[name=N]").value
     result = result * m % N
     dqs(".steps").textContent = steps + 1
+    dqs(".operation").textContent = ` % ${N} =`
     dqs(".result").textContent = result
     highlight(result)
 }
@@ -62,6 +63,7 @@ async function step() {
 async function reset() {
     clear()
     dqs(".steps").textContent = ""
+    dqs(".operation").textContent = ""
     dqs(".result").textContent = ""
 }
 
