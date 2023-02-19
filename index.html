@@ -4,15 +4,32 @@
     <title>Modulo Visualizer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/reset-css@5.0.1/reset.css" />
-    <style type="text/css">.body { width: auto; }</style>
+    <style type="text/css">
+      svg text {
+        font-family: sans-serif;
+        text-anchor: middle;
+        alignment-baseline: central;
+        pointer-events: none;
+      }
+
+      circle {cursor: pointer;}
+
+      .highlight {
+        stroke: #833;
+      }
+
+    </style>
   </head>
   <body>
     <div>
-        
-    </div>
-    <svg>
+      <div>N <input name="N" type="number" value="33"></div>
+      <div>m <input name="m" type="number" value="2"></div>
+      <div>f <input name="f" type="number" value="21"></div>
 
-    </svg>
-    <script src="./main.js"></script>
+    </div>
+    <svg viewBox="-100 -100 200 200"></svg>
+    <button class="run">Run</button>
+    <button class="step">Step</button>
+    <script src="main.js"></script>
   </body>
 </html>
