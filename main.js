@@ -11,7 +11,7 @@ function render(N) {
         const y = -80 * Math.cos(phi)
         const R = 250 / (N + 12)
         add(`<circle data-i="${i}" cx=${x} cy=${y} r=${R} fill="#ddd"></circle>`)
-        add(`<text x=${x} y=${y} style="font-size: ${1.2*R}">${i}</text>`)
+        add(`<text x=${x} y=${y} style="font-size: ${1.2 * R}px">${i}</text>`)
     }
     document.querySelectorAll("circle").forEach(i=>{
         console.log(i.dataset.i);
