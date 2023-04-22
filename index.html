@@ -15,8 +15,19 @@
       svg text {
         font-family: sans-serif;
         text-anchor: middle;
-        alignment-baseline: central;
         pointer-events: none;
+      }
+
+      @supports (alignment-baseline: central) {
+        svg text {
+          alignment-baseline: central;
+        }
+      }
+
+      @supports not (alignment-baseline: central) {
+        svg text {
+          transform: translateY(0.1rem);
+        }
       }
 
       circle {cursor: pointer;}
